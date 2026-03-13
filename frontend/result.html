@@ -5,20 +5,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Air Guard - Analysis</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #A8D5BA, #1B5E3A);
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .internal-header { text-align: center; padding: 30px 20px; color: white; }
+        .header-logo { width: 80px; border-radius: 10px; }
+
+        .main-content { display: flex; justify-content: center; padding: 0 20px 40px; }
+
+        .card-container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        /* Medicine Alert Box Styling */
+        .med-alert-box {
+            background: #f0fdf4;
+            border-left: 5px solid #1B5E3A;
+            padding: 15px;
+            margin-bottom: 25px;
+            text-align: left;
+            border-radius: 8px;
+            display: none; 
+            animation: slideIn 0.5s ease-out;
+            position: relative;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .take-btn {
+            background: #1B5E3A;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .risk-circle {
+            width: 160px;
+            height: 160px;
+            border: 10px solid #6BBF8A;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 25px;
+        }
+
+        .stat-bar {
+            display: flex;
+            justify-content: space-around;
+            background: #f9fbf9;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 1px solid #eee;
+        }
+
+        .btn-primary { background: #1B5E3A; color: white; border: none; padding: 14px; border-radius: 50px; font-weight: bold; cursor: pointer; width: 100%; }
+        .btn-outline { background: transparent; border: 2px solid #1B5E3A; color: #1B5E3A; padding: 12px; border-radius: 50px; font-weight: bold; cursor: pointer; width: 100%; }
+        
+        .sos-btn {
+            position: fixed; top: 20px; right: 20px; background: #ff4d4d; color: white;
+            padding: 10px 20px; border-radius: 50px; font-weight: bold; text-decoration: none; z-index: 1000;
+        }
+    </style>
 </head>
 <body>
     <a href="tel:911" class="sos-btn">SOS</a>
     
     <div class="internal-header">
         <a href="home.html"><img src="logo.png" class="header-logo" alt="Air Guard"></a>
-        <h2 style="margin-top: 10px;">Risk Analysis</h2>
+        <h2 id="welcome-text" style="margin-top: 10px;">Analysis Result</h2>
     </div>
 
-    <div class="main-content" style="justify-content: center;">
-        <div class="card-container" style="max-width: 500px; flex: none;">
+    <div class="main-content">
+        <div class="card-container">
+            
+            <div id="med-alert" class="med-alert-box">
+                <strong style="color: #1B5E3A; font-size: 0.9rem;">💊 MEDICATION REMINDER</strong>
+                <p id="med-instruction" style="margin: 5px 0 0 0; color: #444; font-size: 0.85rem;"></p>
+                <button class="take-btn" onclick="dismissMedications()">I've taken these</button>
+            </div>
+
             <div class="risk-circle">
-                <span style="font-size: 3rem; font-weight: bold; color: var(--darkest-green);">72</span>
-                <span style="font-size: 0.8rem; letter-spacing: 1px; color: var(--mid-green); font-weight: bold;">MODERATE RISK</span>
+                <span style="font-size: 3rem; font-weight: bold; color: #1B5E3A;">72</span>
+                <span style="font-size: 0.8rem; letter-spacing: 1px; color: #4B9B6E; font-weight: bold;">MODERATE RISK</span>
             </div>
             
             <div class="stat-bar">
@@ -27,15 +117,71 @@
                 <div><small style="color: #888;">HUMID</small><br><strong style="font-size: 1.2rem;">55%</strong></div>
             </div>
             
-            <p style="line-height: 1.6; color: #444; margin: 20px 0;">
-                The air quality is safe, but your symptoms suggest moderate irritation. We recommend keeping your medication nearby.
+            <p style="line-height: 1.6; color: #444; margin: 20px 0; font-size: 0.95rem;">
+                The air quality is safe, but your symptoms suggest moderate irritation. Based on your profile, we recommend monitoring your breathing closely.
             </p>
             
             <div style="display: flex; gap: 15px; margin-top: 20px;">
-                <button onclick="location.href='risk.html'" class="btn btn-outline" style="flex:1">Update Data</button>
-                <button onclick="location.href='home.html'" class="btn btn-primary" style="flex:1">Logout</button>
+                <button onclick="location.href='risk.html'" class="btn-outline">Update Data</button>
+                <button onclick="location.href='home.html'" class="btn-primary">Logout</button>
             </div>
         </div>
     </div>
+
+    <script>
+        // Dismiss logic for the session
+        function dismissMedications() {
+            document.getElementById("med-alert").style.display = "none";
+            sessionStorage.setItem("meds_dismissed", "true");
+        }
+
+        window.onload = function() {
+            // 1. Personalize Title
+            const username = localStorage.getItem("username");
+            if (username) {
+                document.getElementById("welcome-text").innerText = "Analysis for " + username;
+            }
+
+            // 2. Multi-Medicine Reminder Logic
+            function checkAllMedications() {
+                const medList = JSON.parse(localStorage.getItem("medications")) || [];
+                const alertBox = document.getElementById("med-alert");
+                const instruction = document.getElementById("med-instruction");
+                
+                // If user already clicked "taken" for this window, stay hidden
+                if (sessionStorage.getItem("meds_dismissed") === "true") return;
+
+                const now = new Date();
+                const currentMins = (now.getHours() * 60) + now.getMinutes();
+                
+                let activeReminders = [];
+
+                medList.forEach(med => {
+                    if (med.time) {
+                        const [h, m] = med.time.split(':').map(Number);
+                        const targetMins = (h * 60) + m;
+
+                        // Show if current time is within (MedTime - 5 mins) and (MedTime)
+                        if (currentMins >= (targetMins - 5) && currentMins <= targetMins) {
+                            activeReminders.push(`• ${med.name} at ${med.time}`);
+                        }
+                    }
+                });
+
+                if (activeReminders.length > 0) {
+                    alertBox.style.display = "block";
+                    instruction.innerHTML = "<strong>Upcoming Meds:</strong><br>" + activeReminders.join("<br>");
+                } else {
+                    alertBox.style.display = "none";
+                    // Reset the dismissal flag if no medications are currently in their 5-min window
+                    sessionStorage.removeItem("meds_dismissed");
+                }
+            }
+
+            // Run check immediately and then every 30 seconds
+            checkAllMedications();
+            setInterval(checkAllMedications, 30000);
+        };
+    </script>
 </body>
 </html>

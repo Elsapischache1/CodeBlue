@@ -5,33 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Air Guard - Risk Assessment</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #A8D5BA, #1B5E3A);
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* SOS Button Styling */
+        .sos-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #ff4d4d;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            text-decoration: none;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .sos-btn:active { transform: scale(0.95); }
+
+        .internal-header {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+        }
+
+        .header-logo {
+            width: 100px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        h2 { font-size: 2rem; margin: 0; }
+
+        .main-content {
+            display: flex;
+            justify-content: center;
+            padding: 0 20px 40px;
+        }
+
+        .card-container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 550px;
+            text-align: center;
+        }
+
+        /* Personalized Greeting Style */
+        #user-greeting {
+            color: #1B5E3A;
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .selection-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .check-card {
+            background: #f1f8e9;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+            border: 1px solid transparent;
+            color: #1B5E3A;
+        }
+
+        .check-card input { margin-right: 10px; }
+
+        .check-card:hover {
+            background: #c8e6c9;
+            border-color: #2e7d32;
+        }
+
+        .btn-primary {
+            background: #1B5E3A;
+            color: white;
+            border: none;
+            padding: 16px;
+            width: 100%;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #2E7D5C;
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
 <body>
     <a href="tel:911" class="sos-btn">SOS</a>
     
     <div class="internal-header">
-        <a href="home.html"><img src="logo.png" class="header-logo" alt="Air Guard"></a>
-        <h2 style="margin-top: 10px;">Symptom Check</h2>
+        <a href="home.html"><img src="logo.png" class="header-logo" alt="Air Guard Logo"></a>
+        <h2>Risk Assessment</h2>
     </div>
 
-    <div class="main-content" style="justify-content: center;">
-        <div class="card-container" style="max-width: 550px; flex: none;">
-            <h3 style="color: var(--darkest-green); margin-bottom: 10px;">How are you feeling?</h3>
-            <p style="color: #666; margin-bottom: 25px;">Select any symptoms you are currently experiencing.</p>
+    <div class="main-content">
+        <div class="card-container">
+            <div id="user-greeting">Hello, User!</div>
+            <p style="color: #666; margin-bottom: 25px;">How are you breathing right now?</p>
             
             <div class="selection-grid">
                 <label class="check-card"><input type="checkbox"> Coughing at night</label>
-                <label class="check-card"><input type="checkbox"> Coughing while workout</label>
+                <label class="check-card"><input type="checkbox"> Coughing while working out</label>
                 <label class="check-card"><input type="checkbox"> Tightness in Chest</label>
-                <label class="check-card"><input type="checkbox"> Shortness in Breath</label>
-                <label class="check-card"><input type="checkbox"> Trouble Talking</label>
+                <label class="check-card"><input type="checkbox"> Shortness of Breath</label>
+                <label class="check-card"><input type="checkbox"> Trouble Speaking</label>
                 <label class="check-card"><input type="checkbox"> Panic/Anxiety</label>
                 <label class="check-card"><input type="checkbox"> Fatigue</label>
                 <label class="check-card"><input type="checkbox"> Chest Pain</label>
             </div>
 
-            <button onclick="location.href='result.html'" class="btn btn-primary" style="margin-top: 20px;">Analyze My Risk</button>
+            <button onclick="location.href='result.html'" class="btn-primary">Analyze My Risk</button>
         </div>
     </div>
+
+    <script>
+        // Retrieve username from localStorage to personalize the page
+        window.onload = function() {
+            const storedName = localStorage.getItem("username");
+            if (storedName) {
+                document.getElementById("user-greeting").innerText = "Hello, " + storedName + "!";
+            }
+        };
+    </script>
 </body>
 </html>
