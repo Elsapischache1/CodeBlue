@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Guard - Analysis</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="tel:911" class="sos-btn">SOS</a>
+    
+    <div class="internal-header">
+        <a href="home.html"><img src="logo.png" class="header-logo" alt="Air Guard"></a>
+        <h2 style="margin-top: 10px;">Risk Analysis</h2>
+    </div>
+
+    <div class="main-content" style="justify-content: center;">
+        <div class="card-container" style="max-width: 500px; flex: none;">
+            <div class="risk-circle">
+                <span style="font-size: 3rem; font-weight: bold; color: var(--darkest-green);">72</span>
+                <span style="font-size: 0.8rem; letter-spacing: 1px; color: var(--mid-green); font-weight: bold;">MODERATE RISK</span>
+            </div>
+            
+            <div class="stat-bar">
+                <div><small style="color: #888;">AQI</small><br><strong style="font-size: 1.2rem;">42</strong></div>
+                <div><small style="color: #888;">TEMP</small><br><strong style="font-size: 1.2rem;">24°C</strong></div>
+                <div><small style="color: #888;">HUMID</small><br><strong style="font-size: 1.2rem;">55%</strong></div>
+            </div>
+            
+            <p style="line-height: 1.6; color: #444; margin: 20px 0;">
+                The air quality is safe, but your symptoms suggest moderate irritation. We recommend keeping your medication nearby.
+            </p>
+            
+            <div style="display: flex; gap: 15px; margin-top: 20px;">
+                <button onclick="location.href='risk.html'" class="btn btn-outline" style="flex:1">Update Data</button>
+                <button onclick="location.href='home.html'" class="btn btn-primary" style="flex:1">Logout</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
