@@ -9,14 +9,27 @@
   --sos-red: #ff4d4d;
 }
 
+/* Global Fix */
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  background-color: var(--bg-soft);
-  color: var(--darkest-green);
+  color: white;
+
+  /* NEW BACKGROUND */
+  background:
+  linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)),
+  url("background.jpg");
+
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
 }
 
-/* SOS Button - Fixed on all pages */
+/* SOS Button */
 .sos-btn {
   position: fixed;
   top: 20px;
@@ -31,18 +44,28 @@ body {
   box-shadow: 0 4px 15px rgba(255, 77, 77, 0.4);
 }
 
-/* Hero & Headers */
+/* Hero Section */
+
 .hero-section {
   width: 100%;
-  padding: 60px 0 100px 0;
+  padding: 60px 0 90px 0;
   text-align: center;
-  background: linear-gradient(135deg, var(--mid-green), var(--darkest-green));
-  color: white;
+
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+
   border-radius: 0 0 40px 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.hero-logo {
+  width: 150px;
+  margin-bottom: 20px;
 }
 
 .internal-header {
-  background: linear-gradient(135deg, var(--mid-green), var(--darkest-green));
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
   padding: 20px 0;
   color: white;
   text-align: center;
@@ -50,88 +73,110 @@ body {
   margin-bottom: 40px;
 }
 
-.hero-logo { width: 150px; margin-bottom: 20px; }
-.header-logo { width: 80px; }
-
-/* Layout Containers */
-/* Apply this to everything to prevent width issues */
-* {
-  box-sizing: border-box;
+.header-logo {
+  width: 80px;
 }
+
+/* Layout */
 
 .main-content {
   max-width: 1000px;
   margin: -60px auto 60px;
   padding: 0 20px;
-  display: flex; 
+  display: flex;
   gap: 25px;
   justify-content: center;
-  align-items: stretch; /* Keeps cards same height */
+  align-items: stretch;
 }
 
+/* Cards */
+
 .card-container {
-  background: white;
+
+  background: rgba(255,255,255,0.12);
+
+  backdrop-filter: blur(16px);
+
   padding: 40px;
   border-radius: 24px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+
+  border: 1px solid rgba(255,255,255,0.2);
+
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+
   text-decoration: none;
+
   flex: 1;
   display: flex;
   flex-direction: column;
   text-align: center;
+
+  transition: 0.3s;
 }
 
+.card-container:hover {
+
+  transform: translateY(-6px);
+
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+}
+
+.card-container h3 {
+  color: white;
+}
+
+.card-container p {
+  color: rgba(255,255,255,0.85);
+}
+
+/* Buttons */
+
 .btn {
-  /* This is the magic fix */
   display: block;
-  width: 100%; /* Now stays inside because of box-sizing: border-box */
-  margin-top: auto; 
+  width: 100%;
+  margin-top: auto;
   padding: 14px 20px;
   border-radius: 50px;
   font-weight: bold;
   text-align: center;
   border: none;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .btn-primary {
-  background-color: var(--darkest-green);
+  background: linear-gradient(135deg,var(--light-green),var(--mid-green));
   color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg,var(--mid-green),var(--dark-green));
 }
 
 .btn-outline {
   background-color: transparent;
-  border: 2px solid var(--darkest-green) !important;
-  color: var(--darkest-green);
+  border: 2px solid white !important;
+  color: white;
 }
 
-/* Forms & Inputs */
+.btn-outline:hover {
+  background: var(--darkest-green);
+  border-color: var(--darkest-green);
+}
+
+/* Forms */
+
 input {
   width: 100%;
   padding: 15px;
   margin-bottom: 20px;
   border-radius: 10px;
   border: 1px solid var(--lightest-green);
-  box-sizing: border-box;
   font-size: 1rem;
 }
 
-.btn {
-  display: inline-block;
-  padding: 15px 30px;
-  border-radius: 50px;
-  font-weight: bold;
-  text-decoration: none;
-  text-align: center;
-  cursor: pointer;
-  border: none;
-  transition: 0.3s;
-}
+/* Selection Grid */
 
-.btn-primary { background: var(--darkest-green); color: white; width: 100%; }
-.btn-outline { border: 2px solid var(--darkest-green); color: var(--darkest-green); background: transparent; }
-
-/* Selection Grids */
 .selection-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -147,11 +192,18 @@ input {
   align-items: center;
   cursor: pointer;
   font-size: 0.9rem;
+
+  background: rgba(255,255,255,0.08);
 }
 
-.check-card input { width: auto; margin-right: 10px; margin-bottom: 0; }
+.check-card input {
+  width: auto;
+  margin-right: 10px;
+  margin-bottom: 0;
+}
 
-/* Result Meter */
+/* Risk Meter */
+
 .risk-circle {
   width: 180px;
   height: 180px;
@@ -162,12 +214,14 @@ input {
   justify-content: center;
   align-items: center;
   margin: 0 auto 30px;
+
+  background: rgba(255,255,255,0.08);
 }
 
 .stat-bar {
   display: flex;
   justify-content: space-around;
-  background: #f0fdf4;
+  background: rgba(255,255,255,0.08);
   padding: 20px;
   border-radius: 15px;
   margin: 20px 0;
